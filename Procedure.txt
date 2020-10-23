@@ -6,17 +6,14 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE GetAllTeamEntities
-	@TeamId as uniqueidentifier
+CREATE PROCEDURE GetTeamAllEntities
+	@TeamId as uniqueidentifier,
+  @PlatformId as uniqueidentifier
 AS
 BEGIN
 	SET NOCOUNT ON;
 
-select FirstName
-from Contact
-where Oid=@TeamId
-
-select top 300 
+select top 500 
 TicketSCID,
 Subject,
 Created,
@@ -35,13 +32,13 @@ TicketStatus,
 TicketType,
 Urgent,
 Build,
-OwnerName
+OwnerName,
+TeamsCount
  FROM [DXStatisticsV2].[dbo].[TicketInfos]
  where 
- (TicketStatus=1 or TicketStatus=2 ) 
- and (PlatformId=@TeamId) 
+ (TicketStatus=1 or TicketStatus=2 )
+ and ((PlatformId=@PlatformId) or (ProcessingTeam=@TeamId) ) 
  and (TicketType<>3)
  
-
 END
 GO
