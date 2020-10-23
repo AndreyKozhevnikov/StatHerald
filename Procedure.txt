@@ -1,0 +1,47 @@
+use [DXStatisticsV2]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE GetAllTeamEntities
+	@TeamId as uniqueidentifier
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+select FirstName
+from Contact
+where Oid=@TeamId
+
+select top 300 
+TicketSCID,
+Subject,
+Created,
+Modified,
+Activated,
+Assignee,
+AssigneeName,
+AssigneePosition,
+ProductId,
+PlatformId,
+PlatformName,
+ProcessingTeam,
+ProcessingSupportTeam,
+DevTeam,
+TicketStatus,
+TicketType,
+Urgent,
+Build,
+OwnerName
+ FROM [DXStatisticsV2].[dbo].[TicketInfos]
+ where 
+ (TicketStatus=1 or TicketStatus=2 ) 
+ and (PlatformId=@TeamId) 
+ and (TicketType<>3)
+ 
+
+END
+GO

@@ -1,0 +1,26 @@
+select top 300 
+TicketSCID,
+Subject,
+Created,
+Modified,
+Activated,
+Assignee,
+AssigneeName,
+AssigneePosition,
+ProductId,
+PlatformId,
+PlatformName,
+ProcessingTeam,
+ProcessingSupportTeam,
+DevTeam,
+TicketStatus,
+TicketType,
+Urgent,
+Build,
+OwnerName
+ FROM [DXStatisticsV2].[dbo].[TicketInfos]
+ where 
+ (TicketStatus=1 or TicketStatus=2 ) 
+  and( (PlatformId='D76AFE22-512E-45A3-AD81-7B245352E111') or (ProcessingTeam='A30500EB-4AD2-46C9-A9C1-51B7468622FF') )
+ and (TicketType<>3)
+ --and (TicketSCID='T941826')
